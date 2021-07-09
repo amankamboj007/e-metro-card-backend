@@ -13,11 +13,16 @@
   },
   "main": "index.js",
   "dependencies": {
+    "express": "^4.17.1",
     "firebase-admin": "^9.8.0",
-    "firebase-functions": "^3.14.1"
+    "firebase-functions": "^3.14.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.5"
   },
   "devDependencies": {
-    "firebase-functions-test": "^0.2.0"
+    "firebase-functions-test": "^0.2.0",
+    "sequelize-cli": "^6.2.0"
   },
   "private": true
 }
