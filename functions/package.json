@@ -4,10 +4,9 @@
   "scripts": {
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
-    "start": "npm run shell",
+    "start": "nodemon server.js",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log",
-    "dev": "nodemon server.js"
+    "logs": "firebase functions:log"
   },
   "engines": {
     "node": "14"
@@ -20,11 +19,11 @@
     "firebase-functions": "^3.14.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
-    "nodemon": "^2.0.10",
     "sequelize": "^6.6.5"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.0",
+    "nodemon": "^2.0.12",
     "sequelize-cli": "^6.2.0"
   },
   "private": true
