@@ -4,7 +4,7 @@ const db = require("./models");
 const dotenv = require('dotenv')
 dotenv.config()
 const PORT = process.env.PORT || 3000;
-const routes = require('./contollers/routes.controller')
+const routes = require("./router/user-route");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -12,8 +12,9 @@ app.use(express.json());
 app.get("/",(req,res) =>{
     res.send("Hello from metro local dev backend")
 })
+app.use('/user',routes)
 
-app.use('/api',routes)
+// app.use('/api',routes)
 
 
 db.sequelize.sync().then(() => {
