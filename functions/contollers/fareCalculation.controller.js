@@ -1,4 +1,3 @@
-const router = require('express').Router()
 
 function calculateFare(distance){
     const baseFare = 10
@@ -7,7 +6,7 @@ function calculateFare(distance){
         totalFare += baseFare
         return totalFare
     }
-    else let totalFare;
+    else{
     if (distance > 2 && distance <= 5) {
         totalFare += 20
         return totalFare
@@ -23,22 +22,8 @@ function calculateFare(distance){
     } else if (distance > 32) {
         totalFare += 60
         return totalFare
-    } else {
-        if (distance < 0) {
-            throw ("Distance cannot be negative")
-        } else {
-            throw ("Distance not measurable")
-        }
-
+    } 
     }
 }
-distance = 19
-router.get("/calculateFare",(req,res) =>{
-    try{
-        const fare = calculateFare(distance)
-        res.status(200).send(fare)
-    }
-    catch (e){
-        res.status(400).send(e)
-    }
-})
+
+module.exports = calculateFare

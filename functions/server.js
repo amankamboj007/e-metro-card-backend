@@ -1,21 +1,26 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
-const db = require("./models");
 const dotenv = require('dotenv')
 dotenv.config()
+const db = require("./config/database");
 const PORT = process.env.PORT || 3000;
+var corsOptions = {
+  origin: "http://localhost:8081"
+};
+app.use(cors(corsOptions));
+
 const routes = require("./router/user-route");
+const fareRoutes = require("./router/fareRoute")
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/",(req,res) =>{
+app.get("/api",(req,res) =>{
     res.send("Hello from metro local dev backend")
 })
-app.use('/user',routes)
-
-// app.use('/api',routes)
-
+app.use('/api/user',routes)
+app.use('/api/fare',fareRoutes)
 
 db.sequelize.sync().then(() => {
     app.listen(PORT, () => {

@@ -3,13 +3,6 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.development.database, dbConfig.development.username, dbConfig.development.password, {
     host: dbConfig.development.host,
     dialect: dbConfig.development.dialect,
-
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle
-  }
 });
 
 const db = {};
@@ -17,6 +10,9 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorials = require("../models/userSchema")(sequelize, Sequelize);
+db.user = require("../models/userSchema")(sequelize, Sequelize);
+db.fare = require("../models/fareCalculationSchema")(sequelize,Sequelize)
+db.wallet = require("../models/walletSchema")(sequelize,Sequelize)
+
 
 module.exports = db;
