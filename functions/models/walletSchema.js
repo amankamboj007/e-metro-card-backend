@@ -12,6 +12,5 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
             }
         });
-        Wallet.belongsTo(User,{foreignKey: "walletID"})
-        return Wallet;
+        return Wallet
     };
