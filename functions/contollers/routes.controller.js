@@ -1,24 +1,23 @@
-const db = require("../models/userSchema"); // models path depend on your structure
-const Tutorial = db.tutorials;
+const db = require("../models");
+const userModel = db.user
 
-exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-    return;
-  }
-
+const create = async(req, res) => {
   // Create a Tutorial
-  const tutorial = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
-  };
+  const User = {
 
-  // Save Tutorial in the database
-  Tutorial.create(tutorial)
+      name:req.body.name,
+      phoneNumber:req.body.phoneNumber,
+      email:req.body.email,
+      isActive:"true",
+      walletID:req.body.walletID
+  
+  };
+ if(!User.name || !User.phoneNumber || !User.email || !User.walletID)
+ {
+   return res.status(400).send('Entities Missing')
+ }
+  // Save User in the database
+  await userModel.create(User)
     .then(data => {
       res.send(data);
     })
@@ -29,3 +28,91 @@ exports.create = (req, res) => {
       });
     });
 };
+const getuserdetails = async (req, res) => {
+try{
+  const userDetails = await userModel.findAll({where:{isActive:true}})
+if(!userDetails){
+  return res.status(200).send({
+      status: 404,
+      message: 'No data found'   
+  });
+}
+res.status(200).send({
+  status: 200,
+
+  data:userDetails  
+});
+}
+catch(error){
+console.log(error)
+return res.status(400).send({
+  message:'Unable to find data',
+  errors: error,
+  status: 400
+});
+}
+}
+const updatedetails = async (req, res) => {
+  try{
+  const userDetails =await userModel.update({  
+    name:req.body.name,
+    phoneNumber:req.body.phoneNumber,
+    email:req.body.email,
+    walletID:req.body.walletID
+  },
+      {where: {userID: req.body.userID,isActive: true}  
+  });
+if(userDetails == 0 ){
+  return res.status(200).send({
+      status: 404,
+      message: 'No data found'   
+  });
+}
+res.status(200).send({
+  status: 200,
+  message: 'user Update Successfully'
+});
+}
+catch(error){
+console.log(error)
+return res.status(400).send({
+  message:'Unable to update user',
+  errors: error,
+  status: 400
+});
+}}
+const deleteuser = async (req, res) => {
+  try{
+        
+  const userDetails =await userModel.update({  
+    isActive:"false"
+    
+  },
+      {where: {userID: req.body.userID} 
+  });
+if(!userDetails){
+  return res.status(200).send({
+      status: 404,
+      message: 'No data found'   
+  });
+}
+res.status(200).send({
+  status: 200,
+  message: 'user deleted Successfully'
+});
+}
+catch(error){
+console.log(error)
+return res.status(400).send({
+  message:'Unable to update user',
+  errors: error,
+  status: 400
+});
+}}
+
+module.exports = {
+  create,
+  getuserdetails,
+  updatedetails,
+  deleteuser
+}

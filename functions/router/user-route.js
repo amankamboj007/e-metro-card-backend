@@ -1,5 +1,5 @@
 
-const tutorials = require("../contollers/routes.controller");
+const { create,getuserdetails,updatedetails,deleteuser } = require("../contollers/routes.controller");
   
 let user = [{
     user1:{
@@ -23,4 +23,8 @@ console.log('hi')
 router.get("/",(req,res)=>{
     res.json(200,user)
         })
+router.post('/Add',create)
+router.get('/all',getuserdetails)
+router.put('/update',updatedetails)
+router.put('/delete',deleteuser)
 module.exports = router
